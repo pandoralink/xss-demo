@@ -1,0 +1,19 @@
+{
+  "name": "xss-demo-client",
+  "version": "1.0.0",
+  "description": "XSS 攻击 demo 的客户端",
+  "main": "app.js",
+  "scripts": {
+    "start": "set PORT=3000 && node ./bin/www"
+  },
+  "author": "poplink",
+  "license": "MIT",
+  "dependencies": {
+    "debug": "~2.6.9",
+    "dotenv": "^16.0.3",
+    "express": "~4.16.1",
+    "morgan": "~1.9.1",
+    "mysql2": "^2.3.3",
+    "prettier": "^2.8.0"
+  }
+}
