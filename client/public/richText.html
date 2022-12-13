@@ -1,0 +1,31 @@
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14"></script>
+</head>
+<body>
+  <div id="app">
+    <div>
+      来吧展示！
+      <div class="richText" v-html="richText"></div>
+    </div>
+    <br />
+    <button @click="addLink">添加链接</button>
+  </div>
+</body>
+<script>
+  const app = new Vue({
+    el: "#app",
+    data() {
+      return {
+        richText: "<h1>Hello World</h1>",
+      };
+    },
+    methods: {
+      addLink() {
+        const linkDialog = prompt("请输入链接", "");
+        if (linkDialog !== null && linkDialog !== "") {
+          this.richText += `<a href=${linkDialog}>一个你无法拒绝点击的链接名称</a>`;
+        }
+      },
+    },
+  });
+</script>
