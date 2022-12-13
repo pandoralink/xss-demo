@@ -1,0 +1,63 @@
+<body>
+  评论：<span class="comment"></span>
+  <input class="comment-input" type="text" style="display: none" />
+  <br />
+  <button class="button" onclick="handleModifyComment()">新增评论</button>
+  <button
+    class="confirm-button"
+    onclick="confirmModifyComment()"
+    style="display: none"
+  >
+    确认
+  </button>
+</body>
+<script>
+  const comment = document.querySelector(".comment");
+  const commentInput = document.querySelector(".comment-input");
+  const button = document.querySelector(".button");
+  const confirmButton = document.querySelector(".confirm-button");
+  const getComment = () => {
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", "http://localhost:3000/v1/comment");
+    xhr.onreadystatechange = () => {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          console.log(xhr.response);
+          comment.innerHTML = xhr.response;
+        }
+      }
+    };
+    xhr.send();
+  };
+  const handleModifyComment = () => {
+    if (button.innerHTML === "取消") {
+      comment.style.display = "initial";
+      commentInput.style.display = "none";
+      confirmButton.style.display = "none";
+      button.innerHTML = "新增评论";
+      getComment();
+    } else {
+      comment.style.display = "none";
+      commentInput.style.display = "initial";
+      confirmButton.style.display = "initial";
+      commentInput.value = comment.innerHTML;
+      button.innerHTML = "取消";
+    }
+  };
+  const confirmModifyComment = () => {
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "http://localhost:3000/v1/comment");
+    xhr.setRequestHeader("Content-type", "application/json");
+    xhr.onreadystatechange = () => {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          handleModifyComment();
+        }
+      }
+    };
+    xhr.send(JSON.stringify({ comment: commentInput.value }));
+  };
+
+  // 初次加载
+  getComment();
+</script>
